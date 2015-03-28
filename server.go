@@ -46,3 +46,8 @@ func main() {
 	m.Run()
 
 }
+
+type Todo struct {
+	Id      int    `json:"id"`
+	Content string `json:"content"`
+}
