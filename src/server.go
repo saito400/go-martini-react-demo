@@ -1,18 +1,36 @@
 package main
 
 import (
-	//	"fmt"
+	"database/sql"
+	"fmt"
 	"github.com/go-martini/martini"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
-	"os"
+	//	"os"
 )
 
 func main() {
 
 	log.Println("start")
 
-	os.Remove("./foo.db")
+	db, err := sql.Open("sqlite3", "../todo.db")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	rows, err := db.Query("select id, content from todo")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var id int
+		var content string
+		rows.Scan(&id, &content)
+		fmt.Println(id, content)
+	}
+	rows.Close()
 
 	m := martini.Classic()
 	m.Get("/", func() string {
