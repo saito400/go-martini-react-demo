@@ -1,4 +1,13 @@
-# martini
+# martini sample
+
+# setup db
+
+sqlite3 todo.db
+
+create table todo(id integer, content text);
+
+insert into todo(id,content) values (1,'study English');
+
 
 # to start server
 
