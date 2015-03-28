@@ -39,8 +39,17 @@ func main() {
 	m.Get("/", func() string {
 		return "Hello world!"
 	})
+
+	m.Get("/todo/list.json", func(r render.Render) {
+		var todo Todo = Todo{
+			1, "study golang",
+		}
+
+		r.JSON(200, todo)
+	})
+
 	m.Get("/hello", func(r render.Render) {
-		r.HTML(200, "hello", "jeremy")
+		r.HTML(200, "hello", "you")
 	})
 
 	m.Run()
