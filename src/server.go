@@ -11,7 +11,7 @@ import (
 
 func main() {
 
-	log.Println("start")
+	log.Println("main start")
 
 	db, err := sql.Open("sqlite3", "../todo.db")
 	if err != nil {
@@ -37,4 +37,5 @@ func main() {
 		return "Hello world!"
 	})
 	m.Run()
+
 }
