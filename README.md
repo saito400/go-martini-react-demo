@@ -2,7 +2,7 @@
 
 # to start server
 
-export GOPATH=`pwd`
+export GOPATH=\`pwd\`
 
 go get github.com/go-martini/martini
 
