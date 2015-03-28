@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/go-martini/martini"
+	"github.com/martini-contrib/render"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
 	//	"os"
@@ -33,9 +34,15 @@ func main() {
 	rows.Close()
 
 	m := martini.Classic()
+	m.Use(render.Renderer())
+
 	m.Get("/", func() string {
 		return "Hello world!"
 	})
+	m.Get("/hello", func(r render.Render) {
+		r.HTML(200, "hello", "jeremy")
+	})
+
 	m.Run()
 
 }
