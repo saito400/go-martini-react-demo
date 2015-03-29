@@ -70,7 +70,7 @@ func list() []Todo {
 		})
 
 	}
-	rows.Close()
+
 	return todoList
 }
 
