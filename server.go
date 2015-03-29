@@ -41,11 +41,20 @@ func main() {
 	})
 
 	m.Get("/todo/list.json", func(r render.Render) {
-		var todo Todo = Todo{
-			1, "study golang",
-		}
 
-		r.JSON(200, todo)
+		var todoList []Todo
+
+		todoList = append(todoList, Todo{
+			1, "study golang",
+		},
+		)
+
+		todoList = append(todoList, Todo{
+			2, "study Engish",
+		},
+		)
+
+		r.JSON(200, todoList)
 	})
 
 	m.Get("/hello", func(r render.Render) {
