@@ -54,7 +54,8 @@ func main() {
 		},
 		)
 
-		r.JSON(200, todoList)
+		r.JSON(200, list())
+
 	})
 
 	m.Get("/hello", func(r render.Render) {
@@ -63,6 +64,33 @@ func main() {
 
 	m.Run()
 
+}
+
+func list() []Todo {
+	db, err := sql.Open("sqlite3", "./todo.db")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+	rows, err := db.Query("select id, content from todo")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	var todoList []Todo
+
+	for rows.Next() {
+		var id int
+		var content string
+		rows.Scan(&id, &content)
+		todoList = append(todoList, Todo{
+			id, content,
+		})
+
+	}
+	rows.Close()
+	return todoList
 }
 
 type Todo struct {
