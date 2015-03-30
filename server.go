@@ -2,12 +2,14 @@ package main
 
 import (
 	"database/sql"
-	//	"fmt"
+	_ "fmt"
 	"github.com/go-martini/martini"
 	"github.com/martini-contrib/render"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
-	//	"os"
+	_ "net/http"
+	_ "os"
+	_ "strconv"
 )
 
 func main() {
@@ -31,9 +33,25 @@ func main() {
 		r.HTML(200, "hello", "you")
 	})
 
+	//	m.Post("/todo", func(r render.Render) {
+	//		add()
+	//		r.JSON(200, list())
+	//	})
+
 	m.Run()
 
 }
+
+//func add(r *http.Request) {
+//
+//	id, _ := strconv.Atoi(r.FormValue("id"))
+//	content := r.FormValue("content")
+//
+//	var todo = Todo{
+//		Id:      id,
+//		Content: content,
+//	}
+//}
 
 func list() []Todo {
 	db, err := sql.Open("sqlite3", "./todo.db")
