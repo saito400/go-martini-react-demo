@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	_ "fmt"
+	_ "github.com/codegangsta/martini-contrib/binding"
 	"github.com/go-martini/martini"
 	"github.com/martini-contrib/render"
 	_ "github.com/mattn/go-sqlite3"
