@@ -34,19 +34,10 @@ func main() {
 		r.HTML(200, "hello", "you")
 	})
 
-	//	m.Post("/todo", func(r render.Render) {
-	//		add()
-	//		r.JSON(200, list())
-	//	})
-
-	//	m.Post("/todo/create", binding.Bind(Todo{}), func(r render.Render, todo Todo) int {
 	m.Post("/todo/create", binding.Bind(Todo{}), func(r render.Render, todo Todo) {
 		insert(todo)
 		r.JSON(200, list())
 
-		//TODO insert
-
-		//		return todo.Id
 	})
 
 	m.Run()
