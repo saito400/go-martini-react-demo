@@ -3,7 +3,7 @@ package main
 import (
 	"database/sql"
 	_ "fmt"
-	_ "github.com/codegangsta/martini-contrib/binding"
+	"github.com/codegangsta/martini-contrib/binding"
 	"github.com/go-martini/martini"
 	"github.com/martini-contrib/render"
 	_ "github.com/mattn/go-sqlite3"
@@ -39,20 +39,45 @@ func main() {
 	//		r.JSON(200, list())
 	//	})
 
+	//	m.Post("/todo/create", binding.Bind(Todo{}), func(r render.Render, todo Todo) int {
+	m.Post("/todo/create", binding.Bind(Todo{}), func(r render.Render, todo Todo) {
+		insert(todo)
+		r.JSON(200, list())
+
+		//TODO insert
+
+		//		return todo.Id
+	})
+
 	m.Run()
 
 }
 
-//func add(r *http.Request) {
-//
-//	id, _ := strconv.Atoi(r.FormValue("id"))
-//	content := r.FormValue("content")
-//
-//	var todo = Todo{
-//		Id:      id,
-//		Content: content,
-//	}
-//}
+func insert(todo Todo) {
+	db, err := sql.Open("sqlite3", "./todo.db")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	tx, err := db.Begin()
+	if err != nil {
+		log.Fatal(err)
+	}
+	stmt, err := tx.Prepare("insert into todo(id, content) values(?, ?)")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(todo.Id, todo.Content)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	tx.Commit()
+
+}
 
 func list() []Todo {
 	db, err := sql.Open("sqlite3", "./todo.db")
@@ -82,6 +107,6 @@ func list() []Todo {
 }
 
 type Todo struct {
-	Id      int    `json:"id"`
-	Content string `json:"content"`
+	Id      int    `form:"id" json:"id" binding:"required"`
+	Content string `form:"content" json:"content" binding:"required"`
 }
