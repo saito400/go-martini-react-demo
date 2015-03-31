@@ -9,18 +9,28 @@
     <div id="content"></div>
     <script type="text/jsx">
 
-
-     var HeaderList = React.createClass({
+     var Todo = React.createClass({
        render: function() {
-         var headerNodes = this.props.data.headers.map(function (header) {
+         return (
+           <div className="todo">
+             <h1>Todo</h1>
+             {this.props.data.content}
+           </div>
+         );
+       }
+     });
+
+     var TodoList = React.createClass({
+       render: function() {
+         var todoNodes = this.props.data.map(function (row) {
            return (
-             <Header data={header} />
+             <Todo data={row} />
            );
          });
          return (
-           <div className="headerList">
-             <h1>Header list</h1>
-             {headerNodes}
+           <div className="todoList">
+             <h1>Todo list</h1>
+             {todoNodes}
            </div>
          );
        }
@@ -36,8 +46,7 @@
          } else {
            return (
              <div className="envelope">
-               <h1>Envelope</h1>
-               <HeaderList data={this.props.data} />
+               <TodoList data={this.props.data} />
              </div>
            );
          }
