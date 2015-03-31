@@ -37,6 +37,31 @@
        }
      });
 
+    var TodoForm = React.createClass({
+      handleSubmit: function(e) {
+        e.preventDefault();
+        var todoId = React.findDOMNode(this.refs.todoId).value.trim();
+        var content = React.findDOMNode(this.refs.content).value.trim();
+        if (!todoId || !content) {
+          alert("enter both please");
+          return;
+        }
+        // TODO: send request to the server
+        React.findDOMNode(this.refs.todoId).value = '';
+        React.findDOMNode(this.refs.content).value = '';
+        return;
+      },
+      render: function() {
+        return (
+          <form className="todoForm" onSubmit={this.handleSubmit}>
+            <input type="text" placeholder="id" ref="todoId" />
+            <input type="text" placeholder="content" ref="content" />
+            <input type="submit" value="Post" />
+          </form>
+        );
+      }
+    });
+
      var DataBox = React.createClass({
        loadCommentsFromServer: function() {
          $.ajax({
@@ -58,7 +83,11 @@
        },
        render: function() {
          return (
-           <TodoList data={this.state.data} />
+           <div>
+             <TodoList data={this.state.data} />
+             <hr />
+             <TodoForm />
+           </div>
          );
        }
      });
