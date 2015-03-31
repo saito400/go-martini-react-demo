@@ -13,8 +13,9 @@
        render: function() {
          return (
            <div className="todo">
-             <h1>Todo</h1>
-             {this.props.data.content}
+             id:{this.props.data.id} 
+             content:{this.props.data.content}
+             <br />
            </div>
          );
        }
