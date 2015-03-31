@@ -37,23 +37,6 @@
        }
      });
 
-     var Envelope = React.createClass({
-       render: function() {
-         if(this.props.data.length == 0){
-           return (
-             <div>
-             </div>
-           );
-         } else {
-           return (
-             <div className="envelope">
-               <TodoList data={this.props.data} />
-             </div>
-           );
-         }
-       }
-     });
-
      var DataBox = React.createClass({
        loadCommentsFromServer: function() {
          $.ajax({
@@ -75,7 +58,7 @@
        },
        render: function() {
          return (
-           <Envelope data={this.state.data} />
+           <TodoList data={this.state.data} />
          );
        }
      });
