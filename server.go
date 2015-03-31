@@ -24,10 +24,12 @@ func main() {
 		return "Hello world!"
 	})
 
+	m.Get("/todo/", func(r render.Render) {
+		r.HTML(200, "index", "")
+	})
+
 	m.Get("/todo/list.json", func(r render.Render) {
-
 		r.JSON(200, list())
-
 	})
 
 	m.Get("/hello", func(r render.Render) {
@@ -37,7 +39,6 @@ func main() {
 	m.Post("/todo/create", binding.Bind(Todo{}), func(r render.Render, todo Todo) {
 		insert(todo)
 		r.JSON(200, list())
-
 	})
 
 	m.Run()
