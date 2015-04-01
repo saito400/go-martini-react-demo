@@ -124,7 +124,7 @@ func delete(todo Todo) {
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(todo.Content, todo.Id)
+	_, err = stmt.Exec(todo.Id)
 	if err != nil {
 		log.Fatal(err)
 	}
