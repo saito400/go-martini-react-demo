@@ -42,12 +42,7 @@ func main() {
 	})
 
 	m.Post("/todo/update", binding.Bind(Todo{}), func(r render.Render, todo Todo) {
-
-		log.Println("update start")
 		update(todo)
-		log.Println(todo)
-
-		log.Println("update  end")
 		r.JSON(200, list())
 	})
 

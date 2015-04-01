@@ -68,13 +68,12 @@
           alert("enter both please");
           return;
         }
-        // TODO: send request to the server
+
        var sendData = {
          id:todoId,
          content:content
        }
 
-//       this.postData('/todo/update',sendData,this.props.loadFromServer);
        this.postData('/todo/create',sendData,this.props.loadFromServer);
 
       },
@@ -83,7 +82,7 @@
           <form className="todoForm" onSubmit={this.handleSubmit}>
             <input type="text" placeholder="id" ref="todoId" />
             <input type="text" placeholder="content" ref="content" />
-            <input type="submit" value="Post" />
+            <input type="submit" value="Add todo" />
           </form>
         );
       }
@@ -118,7 +117,6 @@
          );
        }
      });
-
 
      React.render(
        <DataBox url="/todo/list.json" />,
