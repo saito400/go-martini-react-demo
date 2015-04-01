@@ -64,7 +64,7 @@
        render: function() {
          var todoNodes = this.props.data.map(function (row) {
            return (
-             <Todo data={row} />
+             <Todo loadFromServer={this.props.loadFromServer} data={row} />
            );
          });
          return (
@@ -128,7 +128,7 @@
        render: function() {
          return (
            <div>
-             <TodoList data={this.state.data} loadFromServer={this.loadFromServer} />
+             <TodoList loadFromServer={this.loadFromServer} data={this.state.data} />
              <hr />
              <TodoForm loadFromServer={this.loadFromServer} />
            </div>
