@@ -41,6 +41,16 @@ func main() {
 		r.JSON(200, list())
 	})
 
+	m.Post("/todo/update", binding.Bind(Todo{}), func(r render.Render, todo Todo) {
+
+		log.Println("update start")
+		update(todo)
+		log.Println(todo)
+
+		log.Println("update  end")
+		r.JSON(200, list())
+	})
+
 	m.Run()
 
 }
@@ -63,6 +73,32 @@ func insert(todo Todo) {
 	defer stmt.Close()
 
 	_, err = stmt.Exec(todo.Id, todo.Content)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	tx.Commit()
+
+}
+
+func update(todo Todo) {
+	db, err := sql.Open("sqlite3", "./todo.db")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	tx, err := db.Begin()
+	if err != nil {
+		log.Fatal(err)
+	}
+	stmt, err := tx.Prepare("update todo set content = ? where id = ? ")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(todo.Content, todo.Id)
 	if err != nil {
 		log.Fatal(err)
 	}

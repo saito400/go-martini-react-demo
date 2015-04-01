@@ -9,6 +9,26 @@
     <div id="content"></div>
     <script type="text/jsx">
 
+     var CommonMixin = {
+       postData: function(url,data,callback) {
+         data['dataType'] = "@dataType";
+  
+         $.ajax({
+           url: url,
+           dataType: 'json',
+           method: 'POST',
+           data: data,
+           success: function(data) {
+             callback();
+           }.bind(this),
+           error: function(xhr, status, err) {
+             console.error(this.props.url, status, err.toString());
+             alert("error occured " + err.toString());
+           }.bind(this)
+         });
+       }
+     };
+
      var Todo = React.createClass({
        render: function() {
          return (
@@ -38,6 +58,8 @@
      });
 
     var TodoForm = React.createClass({
+      mixins: [CommonMixin],
+
       handleSubmit: function(e) {
         e.preventDefault();
         var todoId = React.findDOMNode(this.refs.todoId).value.trim();
@@ -47,9 +69,14 @@
           return;
         }
         // TODO: send request to the server
-        React.findDOMNode(this.refs.todoId).value = '';
-        React.findDOMNode(this.refs.content).value = '';
-        return;
+       var sendData = {
+         id:todoId,
+         content:content
+       }
+
+//       this.postData('/todo/update',sendData,this.props.loadFromServer);
+       this.postData('/todo/create',sendData,this.props.loadFromServer);
+
       },
       render: function() {
         return (
@@ -63,7 +90,7 @@
     });
 
      var DataBox = React.createClass({
-       loadCommentsFromServer: function() {
+       loadFromServer: function() {
          $.ajax({
            url: this.props.url,
            dataType: 'json',
@@ -79,14 +106,14 @@
          return {data: []};
        },
        componentDidMount: function() {
-         this.loadCommentsFromServer();
+         this.loadFromServer();
        },
        render: function() {
          return (
            <div>
-             <TodoList data={this.state.data} />
+             <TodoList data={this.state.data} loadFromServer={this.loadFromServer} />
              <hr />
-             <TodoForm />
+             <TodoForm loadFromServer={this.loadFromServer} />
            </div>
          );
        }
