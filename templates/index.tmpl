@@ -30,11 +30,30 @@
      };
 
      var Todo = React.createClass({
+       mixins: [CommonMixin],
+       updateTodo: function(e) {
+         e.preventDefault();
+         var sendData = {
+           id:this.refs.idText.getDOMNode().value,
+           content:this.refs.content.getDOMNode().value
+         }
+         this.postData('/todo/update',sendData,this.props.loadFromServer);
+       },
+       deleteTodo: function(e) {
+         e.preventDefault();
+         var sendData = {
+           id:this.refs.idText.getDOMNode().value,
+           content:this.refs.content.getDOMNode().value
+         }
+         this.postData('/todo/delete',sendData,this.props.loadFromServer);
+       },
        render: function() {
          return (
            <div className="todo">
-             id:<input type="text" ref="idText" name="todoId" defaultValue={this.props.data.id} />
+             id:<input type="text" ref="idText" name="todoId" defaultValue={this.props.data.id} /> 
              content:<input type="text" ref="content" name="content" defaultValue={this.props.data.content} />
+             <input type="button" value="update" onClick={this.updateTodo} />
+             <input type="button" value="delete" onClick={this.deleteTodo} />
              <br />
            </div>
          );
@@ -59,7 +78,6 @@
 
     var TodoForm = React.createClass({
       mixins: [CommonMixin],
-
       handleSubmit: function(e) {
         e.preventDefault();
         var todoId = React.findDOMNode(this.refs.todoId).value.trim();
