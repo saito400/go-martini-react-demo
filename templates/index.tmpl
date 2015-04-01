@@ -33,8 +33,8 @@
        render: function() {
          return (
            <div className="todo">
-             id:{this.props.data.id} 
-             content:{this.props.data.content}
+             id:<input type="text" ref="idText" name="todoId" defaultValue={this.props.data.id} />
+             content:<input type="text" ref="content" name="content" defaultValue={this.props.data.content} />
              <br />
            </div>
          );
