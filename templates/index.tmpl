@@ -64,7 +64,8 @@
        render: function() {
          var todoNodes = this.props.data.map(function (row) {
            return (
-             <Todo loadFromServer={this.props.loadFromServer} data={row} />
+             <Todo loadFromServer="this.props.loadFromServer" data={row} />
+// TODO comment in and replace              <Todo loadFromServer={this.props.loadFromServer} data={row} />
            );
          });
          return (
