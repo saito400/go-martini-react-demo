@@ -98,10 +98,10 @@
       },
       render: function() {
         return (
-          <form className="todoForm" onSubmit={this.handleSubmit}>
+          <form className="todoForm">
             <input type="text" placeholder="id" ref="todoId" />
             <input type="text" placeholder="content" ref="content" />
-            <input type="submit" value="Add todo" />
+            <input type="button" value="Add todo" onClick={this.handleSubmit} />
           </form>
         );
       }
