@@ -30,6 +30,9 @@
      };
 
      var Todo = React.createClass({
+       propTypes: {
+         loadFromServer: React.PropTypes.func.isRequired
+       },
        mixins: [CommonMixin],
        updateTodo: function(e) {
          e.preventDefault();
