@@ -80,15 +80,13 @@
       mixins: [CommonMixin],
       handleSubmit: function(e) {
         e.preventDefault();
-        var todoId = React.findDOMNode(this.refs.todoId).value.trim();
         var content = React.findDOMNode(this.refs.content).value.trim();
-        if (!todoId || !content) {
-          alert("enter both please");
+        if (!content) {
+          alert("enter content please");
           return;
         }
 
        var sendData = {
-         id:todoId,
          content:content
        }
 
@@ -98,7 +96,6 @@
       render: function() {
         return (
           <form className="todoForm">
-            <input type="text" placeholder="id" ref="todoId" />
             <input type="text" placeholder="content" ref="content" />
             <input type="button" value="Add todo" onClick={this.handleSubmit} />
           </form>

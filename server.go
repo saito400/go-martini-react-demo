@@ -36,7 +36,7 @@ func main() {
 		r.HTML(200, "hello", "you")
 	})
 
-	m.Post("/todo/create", binding.Bind(Todo{}), func(r render.Render, todo Todo) {
+	m.Post("/todo/create", binding.Bind(Content{}), func(r render.Render, todo Content) {
 		insert(todo)
 		r.JSON(200, list())
 	})
@@ -55,7 +55,7 @@ func main() {
 
 }
 
-func insert(todo Todo) {
+func insert(todo Content) {
 	db, err := sql.Open("sqlite3", "./todo.db")
 	if err != nil {
 		log.Fatal(err)
@@ -66,13 +66,13 @@ func insert(todo Todo) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	stmt, err := tx.Prepare("insert into todo(id, content) values(?, ?)")
+	stmt, err := tx.Prepare("insert into todo(content) values(?)")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(todo.Id, todo.Content)
+	_, err = stmt.Exec(todo.Content)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -162,5 +162,9 @@ func list() []Todo {
 
 type Todo struct {
 	Id      int    `form:"id" json:"id" binding:"required"`
+	Content string `form:"content" json:"content" binding:"required"`
+}
+
+type Content struct {
 	Content string `form:"content" json:"content" binding:"required"`
 }
