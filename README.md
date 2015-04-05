@@ -4,10 +4,9 @@
 
 sqlite3 todo.db
 
-create table todo(id integer, content text);
+create table todo(id integer primary key autoincrement, content text);
 
 insert into todo(id,content) values (1,'study English');
-
 
 # to start server
 
