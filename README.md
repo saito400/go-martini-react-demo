@@ -20,7 +20,5 @@ go get github.com/martini-contrib/render
 
 go get github.com/codegangsta/martini-contrib/binding
 
-go src
-
 go run server.go
 
