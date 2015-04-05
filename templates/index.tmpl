@@ -95,7 +95,7 @@
        }
 
        this.postData('/todo/create',sendData,this.props.loadFromServer);
-
+       React.findDOMNode(this.refs.content).value = '';
       },
       render: function() {
         return (
