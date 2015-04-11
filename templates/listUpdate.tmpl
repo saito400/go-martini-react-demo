@@ -1,0 +1,79 @@
+<html>
+  <head>
+    <title>index</title>
+    <script src="https://fb.me/react-0.13.1.js"></script>
+    <script src="https://fb.me/JSXTransformer-0.13.1.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.0.min.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/jsx">
+
+     var Todo = React.createClass({
+       propTypes: {
+         todoId: React.PropTypes.number.isRequired
+       },
+       removeTodo: function(todoId) {
+         this.props.removeTodo(this.props.todoId);
+       },
+       render: function() {
+         return (
+           <div>
+             content:<input type="text" ref="content" />
+             <input type="button" value="add" onClick={this.props.addTodo} />
+             <input type="button" value="remove" onClick={this.removeTodo} />
+             <br />
+           </div>
+         );
+       }
+     });
+
+    var TodoForm = React.createClass({
+      render: function() {
+        return (
+          <form className="todoForm">
+            <input type="button" value="Add todo" onClick={this.props.addTodo} />
+          </form>
+        );
+      }
+    });
+
+     var TodoBox = React.createClass({
+       addTodo: function() {
+         var todos = this.state.todolist;
+         var nextTodoId = (this.state.todolist.length == 0) ? 1 : this.state.todolist.map(function(x) {return x.props.todoId}).reduce(function(a,b) { return Math.max(a,b); }) + 1;
+         todos.push(<Todo addTodo={this.addTodo} todoId={nextTodoId} removeTodo={this.removeTodo} />)
+         this.setState({ todolist: todos})
+       },
+       removeTodo: function(todoId) {
+         this.setState({ todolist: this.state.todolist.filter(function(x){return x.props.todoId != todoId})})
+       },
+       getInitialState: function() {
+         return {todolist: []};
+       },
+       componentDidMount: function() {
+       },
+       render: function() {
+         if(this.state.todolist.length == 0){
+           return (
+             <div>
+               <TodoForm addTodo={this.addTodo} />
+             </div>
+           );
+         } else {
+           return (
+             <div>
+               {this.state.todolist}
+             </div>
+           );
+         }
+       }
+     });
+
+     React.render(
+       <TodoBox />,
+       document.getElementById('content')
+     );
+    </script>
+  </body>
+</html>
