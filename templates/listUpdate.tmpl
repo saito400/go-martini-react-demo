@@ -28,15 +28,15 @@
        }
      });
 
-    var TodoForm = React.createClass({
-      render: function() {
-        return (
-          <form className="todoForm">
-            <input type="button" value="Add todo" onClick={this.props.addTodo} />
-          </form>
-        );
-      }
-    });
+     var TodoForm = React.createClass({
+       render: function() {
+         return (
+           <form className="todoForm">
+             <input type="button" value="Add todo" onClick={this.props.addTodo} />
+           </form>
+         );
+       }
+     });
 
      var TodoBox = React.createClass({
        addTodo: function() {
