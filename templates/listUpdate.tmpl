@@ -13,6 +13,9 @@
        propTypes: {
          todoId: React.PropTypes.number.isRequired
        },
+       addTodo: function() {
+         this.props.addTodo();
+       },
        removeTodo: function(todoId) {
          this.props.removeTodo(this.props.todoId);
        },
@@ -20,7 +23,7 @@
          return (
            <div>
              content:<input type="text" ref="content" />
-             <input type="button" value="add" onClick={this.props.addTodo} />
+             <input type="button" value="add" onClick={this.addTodo} />
              <input type="button" value="remove" onClick={this.removeTodo} />
              <br />
            </div>
@@ -40,28 +43,33 @@
 
      var TodoBox = React.createClass({
        addTodo: function() {
-         var todos = this.state.todolist;
-         var nextTodoId = (this.state.todolist.length == 0) ? 1 : this.state.todolist.map(function(x) {return x.props.todoId}).reduce(function(a,b) { return Math.max(a,b); }) + 1;
-         todos.push(<Todo addTodo={this.addTodo} todoId={nextTodoId} removeTodo={this.removeTodo} />)
-         this.setState({ todolist: todos})
+         var todos = this.state.todoList;
+         var nextTodoId = (this.state.todoList.length == 0) ? 1 : this.state.todoList.reduce(function(a,b) { return Math.max(a,b); }) + 1;
+         todos.push(nextTodoId);
+         this.setState({ todoList: todos})
        },
        removeTodo: function(todoId) {
-         this.setState({ todolist: this.state.todolist.filter(function(x){return x.props.todoId != todoId})})
+         this.setState({ todoList: this.state.todoList.filter(function(x){return x != todoId})})
        },
        getInitialState: function() {
-         return {todolist: []};
+         return {todoList: []};
        },
        render: function() {
-         if(this.state.todolist.length == 0){
+         if(this.state.todoList.length == 0){
            return (
              <div>
                <TodoForm addTodo={this.addTodo} />
              </div>
            );
          } else {
+           var todoList = this.state.todoList.map(function (x) {
+             return (
+               <Todo addTodo={this.addTodo} todoId={x} removeTodo={this.removeTodo} />
+              );
+           }, this);
            return (
              <div>
-               {this.state.todolist}
+               {todoList}
                <button>submit</button>
              </div>
            );
