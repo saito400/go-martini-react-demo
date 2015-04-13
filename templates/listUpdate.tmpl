@@ -48,6 +48,9 @@
        removeTodo: function(todoId) {
          this.setState({ todoList: this.state.todoList.filter(function(x){return x != todoId})})
        },
+       handleSubmit: function() {
+         alert("todo");
+       },
        getInitialState: function() {
          return {todoList: []};
        },
@@ -67,7 +70,7 @@
            return (
              <div>
                {todoList}
-               <button>submit</button>
+               <button onClick={this.handleSubmit}>submit</button>
              </div>
            );
          }
