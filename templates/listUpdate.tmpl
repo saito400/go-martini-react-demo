@@ -13,9 +13,6 @@
        propTypes: {
          todoId: React.PropTypes.number.isRequired
        },
-       addTodo: function() {
-         this.props.addTodo();
-       },
        removeTodo: function(todoId) {
          this.props.removeTodo(this.props.todoId);
        },
@@ -23,7 +20,7 @@
          return (
            <div>
              content:<input type="text" ref="content" />
-             <input type="button" value="add" onClick={this.addTodo} />
+             <input type="button" value="add" onClick={this.props.addTodo} />
              <input type="button" value="remove" onClick={this.removeTodo} />
              <br />
            </div>
