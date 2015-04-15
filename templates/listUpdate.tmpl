@@ -11,7 +11,9 @@
 
      var Todo = React.createClass({
        propTypes: {
-         todoId: React.PropTypes.number.isRequired
+         todoId: React.PropTypes.number.isRequired,
+         addTodo: React.PropTypes.func.isRequired,
+         removeTodo: React.PropTypes.func.isRequired
        },
        removeTodo: function(todoId) {
          this.props.removeTodo(this.props.todoId);
